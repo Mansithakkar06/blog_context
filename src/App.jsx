@@ -14,7 +14,6 @@ import Post from './pages/Post'
 import Layout from './Layout'
 
 function App() {
-  const [posts, setPosts] = useState("");
 
   return (
     <>
@@ -23,7 +22,7 @@ function App() {
             <Route path='/' element={<Layout />}>
               <Route path='/' element={<Home />} />
               <Route path='/all-post' element={<AllPost />} />
-              <Route path='/add-post' element={<AddPost posts={posts} setPosts={setPosts} />} />
+              <Route path='/add-post' element={<AddPost />} />
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/post/:slug' element={<Post />} />
