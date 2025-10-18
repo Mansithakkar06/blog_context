@@ -1,17 +1,25 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
-function Post() {
+function Post({posts}) {
     const {slug}=useParams("slug");
+    let post=posts.find((post)=>{
+        return post.slug===slug;
+    })
+    let id=post.id;
     return (
         <div>
+            <div className='flex justify-end py-3 px-2'>
+                <Link to={`/edit/${id}`} className='bg-green-700 px-4 py-2 rounded-lg'>Edit</Link>
+                <button className='bg-red-600 px-4 py-2 rounded-lg mx-3'>Delete</button>
+            </div>
             <div className=''>
-                <img src="https://images.unsplash.com/photo-1575550959106-5a7defe28b56?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lsZGxpZmV8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000" alt="img" className='rounded-lg'/>
+                <img src={post.image} alt="img" className='rounded-lg w-full'/>
             </div>
             <div className='px-4'>
-                <p>posted on 15 oct 2025</p>
-                <h1 className='text-2xl mt-3'>title</h1>
-                <p>description</p>
+                <p>posted on {post.date_posted}</p>
+                <h1 className='text-2xl mt-3'>{post.title}</h1>
+                <p>{post.description}</p>
             </div>
         </div>
     )
