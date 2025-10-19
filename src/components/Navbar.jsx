@@ -16,9 +16,9 @@ function Navbar() {
             <li className='px-3 hover:text-purple-600'>
                 <NavLink to="/add-post">Add Post</NavLink>
             </li>
-            <li className='px-3 hover:text-purple-600'>
+            {/* <li className='px-3 hover:text-purple-600'>
                 <NavLink to="/all-post">All Post</NavLink>
-            </li>
+            </li> */}
             <li className='px-3 hover:text-purple-600'>
                 <NavLink to="/login">Login</NavLink>
             </li>

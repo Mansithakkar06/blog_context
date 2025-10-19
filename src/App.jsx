@@ -38,8 +38,8 @@ const [posts, setPosts] = useState(() => {
               <Route path='/add-post' element={<AddPost setPosts={setPosts} />} />
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />
-              <Route path='/post/:slug' element={<Post posts={posts} />} />
-              <Route path='/edit/:id' element={<EditPost posts={posts} />} />
+              <Route path='/post/:slug' element={<Post posts={posts} setPosts={setPosts} />} />
+              <Route path='/edit/:id' element={<EditPost posts={posts} setPosts={setPosts} />} />
             </Route>
           </Routes>
       </BrowserRouter>

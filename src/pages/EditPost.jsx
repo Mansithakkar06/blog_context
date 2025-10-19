@@ -4,7 +4,7 @@ import InputBox from '../components/InputBox';
 import TextareaBox from '../components/TextareaBox';
 import Button from '../components/Button';
 
-function EditPost({ posts }) {
+function EditPost({ posts,setPosts }) {
     const { id } = useParams("id");
     const navigate = useNavigate()
     const [title, setTitle] = useState("");
@@ -13,8 +13,8 @@ function EditPost({ posts }) {
     const [error, setError] = useState("");
     const [image, setImage] = useState("")
     const [success, setSuccess] = useState("")
-    let post = posts.find((post) => {
-        return post.id == id;
+    let post = posts.find((p) => {
+        return p.id == id;
     })
 
     const submitHandler = (e) => {
@@ -23,15 +23,12 @@ function EditPost({ posts }) {
             setError("Please fill all the fields!!!")
         }
         else {
-            let updated=posts.map((post)=>(
-                post.id==id?{ ...post, title: title, slug: slug, description: description, image: image }:post
-            ))
-            setPosts(prev => {
-                return [...prev, updated]
-            })
-            setSuccess("Post added successfully!! redirecting to Home page....")
+            setPosts(posts.map((p)=>(
+                p.id==id?{ ...p, title: title, slug: slug, description: description, image: image }:p
+            )))
+            setSuccess("Post Updated successfully!! redirecting....")
             setTimeout(() => {
-                navigate('/')
+                navigate(`/post/${slug}`)
             }, 2000);
             setTitle("")
             setDescription("")
