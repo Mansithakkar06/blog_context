@@ -9,37 +9,39 @@ import Signup from './pages/Signup'
 import Post from './pages/Post'
 import Layout from './Layout'
 import EditPost from './pages/EditPost'
+import NotFound from './pages/NotFound'
 
 function App() {
-const [posts, setPosts] = useState(() => {
-        try {
-            let saved = localStorage.getItem("posts")
-            if (!saved || saved === "undefined") {
-                return [];
-            }
-            else {
-                return saved && JSON.parse(saved)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    });
+// const [posts, setPosts] = useState(() => {
+//         try {
+//             let saved = localStorage.getItem("posts")
+//             if (!saved || saved === "undefined") {
+//                 return [];
+//             }
+//             else {
+//                 return saved && JSON.parse(saved)
+//             }
+//         } catch (error) {
+//             console.log(error)
+//         }
+//     });
 
-    useEffect(() => {
-        localStorage.setItem("posts", JSON.stringify(posts))
-    }, [posts])
+//     useEffect(() => {
+//         localStorage.setItem("posts", JSON.stringify(posts))
+//     }, [posts])
   return (
     <>
       <BrowserRouter>
           <Routes>
             <Route path='/' element={<Layout />}>
-              <Route path='/' element={<Home posts={posts} />} />
+              <Route path='/' element={<Home />} />
               <Route path='/all-post' element={<AllPost />} />
-              <Route path='/add-post' element={<AddPost setPosts={setPosts} />} />
+              <Route path='/add-post' element={<AddPost />} />
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />
-              <Route path='/post/:slug' element={<Post posts={posts} setPosts={setPosts} />} />
-              <Route path='/edit/:id' element={<EditPost posts={posts} setPosts={setPosts} />} />
+              <Route path='/post/:slug' element={<Post />} />
+              <Route path='/edit/:id' element={<EditPost />} />
+              <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
       </BrowserRouter>

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PostCard from '../components/PostCard'
+import { PostContext } from '../context/PostContext'
 
-function Home({ posts }) {
+function Home() {
+  const {posts,setPosts}=useContext(PostContext)
   return posts.length!==0 ?(
     <div className='p-4 m-2 flex'>
       {

@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import InputBox from '../components/InputBox';
 import TextareaBox from '../components/TextareaBox';
 import Button from '../components/Button';
+import { PostContext } from '../context/PostContext';
+import FormLayout from '../components/FormLayout';
+import { useFormFields } from '../hooks/useFormFields';
 
-function EditPost({ posts,setPosts }) {
+function EditPost() {
+    const { posts, setPosts } = useContext(PostContext)
     const { id } = useParams("id");
-    const navigate = useNavigate()
-    const [title, setTitle] = useState("");
-    const [slug, setSlug] = useState("");
-    const [description, setDescription] = useState("");
-    const [error, setError] = useState("");
-    const [image, setImage] = useState("")
-    const [success, setSuccess] = useState("")
+    const { title, setTitle, slug, setSlug, description, setDescription, error, setError, image, setImage, success, setSuccess, navigate } = useFormFields()
+    
     let post = posts.find((p) => {
         return p.id == id;
     })
@@ -23,17 +22,13 @@ function EditPost({ posts,setPosts }) {
             setError("Please fill all the fields!!!")
         }
         else {
-            setPosts(posts.map((p)=>(
-                p.id==id?{ ...p, title: title, slug: slug, description: description, image: image }:p
+            setPosts(posts.map((p) => (
+                p.id == id ? { ...p, title: title, slug: slug, description: description, image: image } : p
             )))
             setSuccess("Post Updated successfully!! redirecting....")
             setTimeout(() => {
                 navigate(`/post/${slug}`)
             }, 2000);
-            setTitle("")
-            setDescription("")
-            setSlug("")
-            setImage("")
             setError("")
         }
     }
@@ -45,12 +40,8 @@ function EditPost({ posts,setPosts }) {
     }, [])
     return (
         <div className='m-auto w-xl'>
-            <div className='p-3'>
-                <h1 className='font-medium text-3xl text-center'>Edit Post</h1>
-            </div>
-            <div className='bg-gray-200 text-black rounded-lg px-7 py-4 w-xl'>
-                <div className={`text-red-600 bg-rose-300 px-3 py-1 rounded-lg font-medium ${error === "" ? "hidden" : ""}`}>{error}</div>
-                <div className={`text-green-800 bg-green-400 px-3 py-1 rounded-lg font-medium ${success === "" ? "hidden" : ""}`}>{success}</div>
+            <FormLayout success={success} error={error} title="Edit Post">
+
                 <form onSubmit={submitHandler}>
 
                     <InputBox
@@ -89,10 +80,10 @@ function EditPost({ posts,setPosts }) {
                         onChange={(e) => setDescription(e.target.value)}
                     />
 
-                    <Button text="Update" />
+                    <Button>Update</Button>
 
                 </form>
-            </div>
+            </FormLayout>
 
         </div>
     )

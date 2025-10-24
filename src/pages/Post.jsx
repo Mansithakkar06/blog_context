@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { PostContext } from '../context/PostContext';
 
-function Post({posts,setPosts}) {
+function Post() {
+    const {posts,setPosts}=useContext(PostContext)
     const {slug}=useParams("slug");
     const navigate=useNavigate();
     let post=posts.find((post)=>{

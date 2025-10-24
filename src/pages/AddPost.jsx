@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react'
 import InputBox from '../components/InputBox';
 import TextareaBox from '../components/TextareaBox';
 import Button from '../components/Button';
+import { PostContext } from '../context/PostContext';
+import FormLayout from '../components/FormLayout';
+import { useFormFields } from '../hooks/useFormFields';
 
-function AddPost({ setPosts }) {
-  const navigate = useNavigate()
-  const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
-  const [description, setDescription] = useState("");
-  const [error, setError] = useState("");
-  const [image, setImage] = useState("")
-  const [success, setSuccess] = useState("")
+function AddPost() {
+  const {setPosts }=useContext(PostContext)
+  const {title,setTitle,slug,setSlug,description,setDescription,error,setError,image,setImage,success,setSuccess,navigate,resetForm}=useFormFields()
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -28,24 +25,14 @@ function AddPost({ setPosts }) {
       setTimeout(() => {
         navigate('/')
       }, 2000);
-      setTitle("")
-      setDescription("")
-      setSlug("")
-      setImage("")
-      setError("")
+     resetForm();
     }
 
   }
 
-
   return (
     <div className='m-auto w-xl'>
-      <div className='p-3'>
-        <h1 className='font-medium text-3xl text-center'>Add Post</h1>
-      </div>
-      <div className='bg-gray-200 text-black rounded-lg px-7 py-4 w-xl'>
-        <div className={`text-red-600 bg-rose-300 px-3 py-1 rounded-lg font-medium ${error === "" ? "hidden" : ""}`}>{error}</div>
-        <div className={`text-green-800 bg-green-400 px-3 py-1 rounded-lg font-medium ${success === "" ? "hidden" : ""}`}>{success}</div>
+        <FormLayout success={success} error={error} title="Add Post">
         <form onSubmit={submitHandler}>
 
           <InputBox
@@ -72,10 +59,10 @@ function AddPost({ setPosts }) {
             onChange={(e) => setImage(e.target.value)}
             placeholder='enter image url'
           />
+
           {
             image&&<img src={image} alt="image" className='m-auto w-48 h-25' />
           }
-
 
           <TextareaBox
             label="Description"
@@ -85,11 +72,10 @@ function AddPost({ setPosts }) {
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <Button text="Add" />
+          <Button>Add</Button>
 
         </form>
-      </div>
-
+        </FormLayout>
     </div>
   )
 }

@@ -18,7 +18,6 @@ export const PostProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        console.log(posts)
         localStorage.setItem("posts", JSON.stringify(posts))
     }, [posts])
 
