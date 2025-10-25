@@ -4,6 +4,7 @@ import { useFormFields } from '../hooks/useFormFields'
 import InputBox from '../components/InputBox'
 import Button from '../components/Button'
 import { UserContext } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
   const {error,setError,success,setSuccess}=useFormFields()
@@ -11,6 +12,7 @@ function Signup() {
   const [password,setPassword]=useState("")
   const [confirm,setConfirm]=useState("")
   const {signup}=useContext(UserContext)
+  const navigate=useNavigate()
 
   const submitHandler=(e)=>{
     e.preventDefault();
@@ -29,6 +31,7 @@ function Signup() {
       setSuccess("Account created successfully!!")
       setTimeout(() => {
         resetForm()
+        navigate('/')
       }, 2000);
     }
   }

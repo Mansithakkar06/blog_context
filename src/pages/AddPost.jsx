@@ -5,11 +5,13 @@ import Button from '../components/Button';
 import { PostContext } from '../context/PostContext';
 import FormLayout from '../components/FormLayout';
 import { useFormFields } from '../hooks/useFormFields';
+import { UserContext } from '../context/UserContext';
 
 function AddPost() {
+  const {currentUser}=useContext(UserContext)
   const {setPosts }=useContext(PostContext)
   const {title,setTitle,slug,setSlug,description,setDescription,error,setError,image,setImage,success,setSuccess,navigate,resetForm}=useFormFields()
-
+  
   const submitHandler = (e) => {
     e.preventDefault()
     let date = Date().toLocaleString()
@@ -17,7 +19,16 @@ function AddPost() {
       setError("Please fill all the fields!!!")
     }
     else {
-      let post = { id: Date.now(), title: title, slug: slug, description: description, image: image, date_posted: date.substring(4, 16) }
+      let post = {
+        id: Date.now(),
+        title: title,
+        slug: slug, 
+        description: description,
+        image: image,
+        date_posted: date.substring(4, 16),
+        post_by:currentUser.username
+       }
+       
       setPosts(prev => {
         return [...prev, post]
       })

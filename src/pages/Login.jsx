@@ -1,17 +1,32 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import FormLayout from '../components/FormLayout'
 import {useFormFields} from '../hooks/useFormFields'
 import InputBox from '../components/InputBox';
 import Button from '../components/Button'
+import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const {success,error}= useFormFields();
+  const {success,setSuccess,error,setError}= useFormFields();
   const [username,setUsername]=useState("")
   const [password,setPassword]=useState("");
+  const {login}=useContext(UserContext);
+  const navigate=useNavigate()
 
   const submitHandler=(e)=>{
     e.preventDefault();
-    console.log(username,password)
+    const user={username:username,password:password}
+    const result=login(user);
+    if(result){
+      setSuccess("Redirecting!!")
+      setError("")
+      setTimeout(() => {
+        navigate("/")
+      }, 2000);
+    }
+    else{
+      setError("Invalid Credentials!!")
+    }
   }
   return (
     <div className='w-xl m-auto'>

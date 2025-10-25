@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PostContext } from '../context/PostContext';
+import { UserContext } from '../context/UserContext';
 
 function Post() {
     const {posts,setPosts}=useContext(PostContext)
+    const {currentUser}=useContext(UserContext)
     const {slug}=useParams("slug");
     const navigate=useNavigate();
     let post=posts.find((post)=>{
@@ -18,10 +20,14 @@ function Post() {
     }
     return (
         <div>
+            {
+            post.post_by===currentUser.username ? 
             <div className='flex justify-end py-3 px-2'>
                 <Link to={`/edit/${id}`} className='bg-green-700 px-4 py-2 rounded-lg'>Edit</Link>
                 <button onClick={()=>handleDelete(id)} className='bg-red-600 px-4 py-2 rounded-lg mx-3'>Delete</button>
             </div>
+            :""
+            }
             <div className=''>
                 <img src={post.image} alt="img" className='rounded-lg w-full'/>
             </div>

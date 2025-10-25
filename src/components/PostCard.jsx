@@ -10,7 +10,8 @@ function PostCard({post}) {
         </Link>
       </div>
       <div className='m-1'>
-        <p className='font-light text-sm'>posted on <span className='font-normal italic'>{post.date_posted}</span></p>
+        <p className='font-light text-sm'>Posted on <span className='font-normal italic'>{post.date_posted}</span></p>
+        <p className='font-light text-sm'>Post by <span className='font-normal italic'>{post.post_by}</span></p>
         <h2 className='font-medium'>{post.title}</h2>
         <p>{post.descripion}</p>
       </div>

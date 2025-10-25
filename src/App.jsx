@@ -10,6 +10,7 @@ import Post from './pages/Post'
 import Layout from './Layout'
 import EditPost from './pages/EditPost'
 import NotFound from './pages/NotFound'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
 // const [posts, setPosts] = useState(() => {
@@ -36,7 +37,10 @@ function App() {
             <Route path='/' element={<Layout />}>
               <Route path='/' element={<Home />} />
               <Route path='/all-post' element={<AllPost />} />
-              <Route path='/add-post' element={<AddPost />} />
+              <Route path='/add-post' element={
+                <ProtectedRoute>
+                  <AddPost />
+                </ProtectedRoute>} />
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/post/:slug' element={<Post />} />
