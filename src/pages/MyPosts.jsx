@@ -1,13 +1,19 @@
 import React, { useContext } from 'react'
-import PostCard from '../components/PostCard'
 import { PostContext } from '../context/PostContext'
+import { UserContext } from '../context/UserContext'
+import PostCard from '../components/PostCard'
 
-function Home() {
-  const {posts}=useContext(PostContext)
-  return posts.length!==0 ?(
+function MyPosts() {
+ const {posts,setPosts} = useContext(PostContext)
+ const {currentUser}=useContext(UserContext)
+
+ const myposts=posts.filter((post)=>(
+    post.post_by===currentUser.username
+ ))
+  return myposts.length!==0 ?(
     <div className='p-4 m-2 flex'>
       {
-        posts.map((post) => (
+        myposts.map((post) => (
           <div key={post.id}>
           <PostCard post={post} />
           </div>
@@ -22,4 +28,5 @@ function Home() {
   )
 }
 
-export default Home
+export default MyPosts
+

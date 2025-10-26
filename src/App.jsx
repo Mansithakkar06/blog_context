@@ -2,8 +2,8 @@ import { useState,useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import AllPost from './pages/AllPost'
 import AddPost from './pages/AddPost'
+import MyPosts from './pages/MyPosts'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Post from './pages/Post'
@@ -36,7 +36,10 @@ function App() {
           <Routes>
             <Route path='/' element={<Layout />}>
               <Route path='/' element={<Home />} />
-              <Route path='/all-post' element={<AllPost />} />
+              <Route path='/my-posts' element={
+                <ProtectedRoute>
+                  <MyPosts/>
+                </ProtectedRoute>} />
               <Route path='/add-post' element={
                 <ProtectedRoute>
                   <AddPost />
@@ -44,7 +47,10 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/post/:slug' element={<Post />} />
-              <Route path='/edit/:id' element={<EditPost />} />
+              <Route path='/edit/:id' element={
+                <ProtectedRoute>
+                  <EditPost />
+                </ProtectedRoute>} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

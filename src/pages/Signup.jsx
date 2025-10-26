@@ -11,11 +11,14 @@ function Signup() {
   const [username,setUsername]=useState("")
   const [password,setPassword]=useState("")
   const [confirm,setConfirm]=useState("")
-  const {signup}=useContext(UserContext)
+  const {signup,users}=useContext(UserContext)
   const navigate=useNavigate()
 
   const submitHandler=(e)=>{
     e.preventDefault();
+    const usercheck=users.find((user)=>(
+      user.username===username
+    ))
     if(username==="" || password==="" || confirm==="")
     {
       setError("please fill all the fields!!")
@@ -23,6 +26,9 @@ function Signup() {
     else if(password!==confirm)
     {
       setError("Password and confirm password are not same!!")
+    }
+    else if(usercheck){
+      setError("This username already exist!! please try another name!!")
     }
     else{
       const user={id:Date.now(),username:username,password:password}

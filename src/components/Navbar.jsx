@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext'
 import Button from './Button'
 
 function Navbar() {
   const {currentUser,logout}=useContext(UserContext)
-  const submitHandler=(e)=>{
+  const navigate=useNavigate()
+  const submitHandler=()=>{
     logout();
+    navigate('/')
   }
   return (
     <header className='w-full p-3 mb-10 bg-gray-200 top-0 fixed shadow-lg shadow-black-500/50 text-black'>
@@ -22,9 +24,9 @@ function Navbar() {
             <li className='px-3 hover:text-purple-600'>
                 <NavLink to="/add-post">Add Post</NavLink>
             </li>
-            {/* <li className='px-3 hover:text-purple-600'>
-                <NavLink to="/all-post">All Post</NavLink>
-            </li> */}
+            {currentUser&&<li className='px-3 hover:text-purple-600'>
+                <NavLink to="/my-posts">My Posts</NavLink>
+            </li>}
             
             {!currentUser&&<li className='px-3 hover:text-purple-600'>
                 <NavLink to="/login">Login</NavLink>
