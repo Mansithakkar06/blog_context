@@ -21,7 +21,7 @@ function Post() {
     return (
         <div>
             {
-            post.post_by===currentUser.username ? 
+            currentUser && post.post_by===currentUser.username ? 
             <div className='flex justify-end py-3 px-2'>
                 <Link to={`/edit/${id}`} className='bg-green-700 px-4 py-2 rounded-lg'>Edit</Link>
                 <button onClick={()=>handleDelete(id)} className='bg-red-600 px-4 py-2 rounded-lg mx-3'>Delete</button>
@@ -32,7 +32,10 @@ function Post() {
                 <img src={post.image} alt="img" className='rounded-lg w-full'/>
             </div>
             <div className='px-4'>
-                <p>posted on {post.date_posted}</p>
+                <div className='flex justify-between'>
+                <p>Posted on {post.date_posted}</p>
+                <p>Post by {post.post_by}</p>
+                </div>
                 <h1 className='text-2xl mt-3'>{post.title}</h1>
                 <p>{post.description}</p>
             </div>
